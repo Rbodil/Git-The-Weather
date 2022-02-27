@@ -1,0 +1,87 @@
+*{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.header-card{
+    background: linear-gradient(0.25turn, rgb(47, 189, 189),blue,rgb(36, 28, 70));
+    color:whitesmoke;
+    height: 100px;
+    padding-top: 20px;
+}
+.card{
+    border: 2px solid rgb(64, 64, 117);
+    height: 200px;
+}
+.btn{
+    border: 1px solid black;
+    width: 100%;
+    margin-top: 30px;
+    background-color: rgb(1, 54, 104);
+    color: rgb(153, 248, 255);
+    font-weight: light;
+}
+.list-item {
+    margin-bottom: 7px;
+    margin-left: 30px;
+    padding: 1.5%;
+    border-radius: 5px;
+    background-color: rgb(1, 54, 104);
+    color: whitesmoke;
+    text-decoration: none;
+    padding: 5px;
+    border: 1px solid whitesmoke;
+}
+.current-weather{
+    height: 250px;
+    
+}
+.five-day{
+    height: 250px;
+}
+.weather-block{
+    background-color: rgb(18, 2, 54);
+    color:aliceblue;
+    display:flex;
+    flex-direction: column;
+}
+.flex-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.justify-space-between {
+    justify-content: space-between;
+}
+
+.justify-space-around {
+    justify-content: space-around;
+}
+
+.justify-flex-start {
+    justify-content: flex-start
+}
+
+.justify-flex-end {
+    justify-content: flex-end;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-stretch {
+    align-items: stretch;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+
+.align-center {
+    align-items: center;
+}
