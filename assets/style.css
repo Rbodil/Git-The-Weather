@@ -33,16 +33,26 @@
 }
 .current-weather{
     height: 250px;
+    margin-top: 50px;
     
 }
 .five-day{
     height: 250px;
+    flex-wrap: nowrap;
+    
 }
 .weather-block{
     background-color: rgb(18, 2, 54);
     color:aliceblue;
     display:flex;
     flex-direction: column;
+    margin: 2px;
+    padding: 10px;
+}
+.icon img{
+    height: 250px;
+    width: 250px;
+    border: 2px solid green;
 }
 .flex-row {
     display: flex;

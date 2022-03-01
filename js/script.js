@@ -4,16 +4,29 @@ var cityContEl = document.querySelector("#city-container");
 var searchBarEl = document.querySelector("#city");
 var searchForm = document.querySelector("#find-city");
 
+// if local storage items exist, use those, if none create fresh array
+var searchArray = JSON.parse(localStorage.getItem("city")) || [];
+
+for(let i=0; i<searchArray.length; i++){
+    let newSearch = document.createElement("a");
+    newSearch.setAttribute("class","list-item");
+    newSearch.textContent = searchArray[i];
+    
+    cityContEl.appendChild(newSearch);
+
+};
+
 function formSubmitHandler(event){
     event.preventDefault();
     var citySearch = searchBarEl.value.trim();
-    localStorage.setItem("city", JSON.stringify(citySearch));
+    searchArray.push(citySearch);
+    localStorage.setItem("city", JSON.stringify(searchArray));
+
 
     if(citySearch){
         getCity(citySearch);
         searchBarEl.value = "";
-        //dynamically create <a> using getItem value
-        //cityContEl.appendChild();
+        //
     } else {
         alert("Please search for a city")
     }
@@ -43,22 +56,15 @@ function getCity(city){
 };
 
 function getWeather(lat, long){
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+ lat +"&lon="+ long +"&appid=d465004d10a4822000d10942c7287cc9"
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat="+ lat +"&lon="+ long +"&units=imperial&appid=d465004d10a4822000d10942c7287cc9";
     
     fetch(apiUrl).then(function (response){
         if(response.ok){
             response.json().then(function(data){
                 console.log(data);
-                /*TO DO:
-                find out how to convert UNIX to UTC in my code
-                declare variables for data to be passed to displayCurrent
-                declare variables for data to be passed to displayFive
-                possibly use the same api but different fetch request to avoid confusion
-                dynamically create elements using hard coded placeholders
-                find out how to display icons correctly, do I need additional sheets?
-                */
-
-
+                var date = new Date (data.current.dt *1000);
+                displayFive(data.daily);
+                displayCurrent(data.current);
 
             });
         }else{
@@ -71,16 +77,54 @@ function getWeather(lat, long){
     
 };
 
-function displayCurrent(city, date, temp, wind, humidity, uvIndex){
-
+function displayCurrent(currentObj){
+    
 };
 
-function displayFive(date, icon, temp, wind, humidity){
+function displayFive(fiveDayArray){
+    for(let i=0; i < 5; i++){
+        var date = moment(fiveDayArray[i].dt *1000).format("MM/DD/YYYY");
+        var icon = "http://openweathermap.org/img/wn/"+ fiveDayArray[i].weather[0].icon +"@2x.png";
+        var tempHigh = fiveDayArray[i].temp.max;
+        var tempLow =  fiveDayArray[i].temp.min;
+        var wind = fiveDayArray[i].wind_speed;
+        var humidity = fiveDayArray[i].humidity;
 
+        var fiveBlock = document.createElement("div");
+        fiveBlock.setAttribute("class","weather-block");
+
+        var dateEl = document.createElement("h4")
+        dateEl.textContent = date;
+
+        var iconEl = document.createElement("img");
+        iconEl.setAttribute("src",icon);
+
+        var tempEl = document.createElement("p");
+        tempEl.textContent = tempHigh +" - "+ tempLow;
+
+        var windEl = document.createElement("p");
+        windEl.textContent = wind;
+
+        var humEl = document.createElement("p");
+        humEl.textContent = humidity;
+
+        fiveBlock.appendChild(dateEl);
+        fiveBlock.appendChild(iconEl);
+        fiveBlock.appendChild(tempEl);
+        fiveBlock.appendChild(windEl);
+        fiveBlock.appendChild(humEl);
+        
+        fiveDayEl.appendChild(fiveBlock);
+
+
+    }
+//date, icon, temp, wind, humidity
 };
 
 
 searchForm.addEventListener("submit", formSubmitHandler);
+cityContEl.addEventListener("click", (e)=>
+    getCity(e.target.textContent));
 
 // fetch from search bar; formSubmitHandler, getUserRepos
 // fetch from previous searches, limit 10; see buttonClickHandler
