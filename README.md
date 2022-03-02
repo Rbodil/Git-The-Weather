@@ -13,4 +13,4 @@ https://rbodil.github.io/Git-The-Weather/
 
 </br>
 
-![demo](./assets/Git The Weather.gif)
+![demo](./assets/Git-The-Weather.gif)
