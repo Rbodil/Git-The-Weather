@@ -36,6 +36,31 @@
     margin-top: 50px;
     
 }
+.low-risk{
+    background-color: green;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 10px;
+}
+.moder-risk{
+    background-color: rgb(221, 200, 6);
+    color:black;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 10px;
+}
+.high-risk{
+    background-color: orangered;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 10px;
+}
+.extreme-risk{
+    background-color: red;
+    padding: 5px;
+    width: fit-content;
+    border-radius: 10px;
+}
 .five-day{
     height: 250px;
     flex-wrap: nowrap;

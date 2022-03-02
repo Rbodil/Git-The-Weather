@@ -103,7 +103,7 @@ function displayCurrent(currentObj){
     currentTemp.textContent = currTempEl + " °F";
 
     var currentWind = document.createElement('p');
-    currentWind.textContent = "Wind Speed: " + currWindEl + "mph";
+    currentWind.textContent = "Wind Speed: " + currWindEl + " mph";
 
 
     var currentHumid = document.createElement('p');
@@ -112,6 +112,15 @@ function displayCurrent(currentObj){
 
     var currentUv = document.createElement('p');
     currentUv.textContent = "UV Index: " + currUviEl;
+        if(currUviEl>=0 && currUviEl<3){
+            currentUv.setAttribute("class","low-risk");
+        }if(currUviEl>=3 && currUviEl<6){
+            currentUv.setAttribute("class","moder-risk");
+        }if(currUviEl>=6 && currUviEl<8){
+            currentUv.setAttribute("class", "high-risk");
+        }if(currUviEl>8){
+            currentUv.setAttribute("clear", "extreme-risk")
+        }
 
     var iconHouse = document.createElement("div");
     iconHouse.setAttribute("class", "icon");
@@ -157,7 +166,7 @@ function displayFive(fiveDayArray){
         tempEl.textContent = tempHigh + "°F - " + tempLow + " °F";
 
         var windEl = document.createElement("p");
-        windEl.textContent = wind + "mph";
+        windEl.textContent = wind + " mph";
 
         var humEl = document.createElement("p");
         humEl.textContent = humidity + "%";
