@@ -13,7 +13,7 @@ for(let i=0; i<searchArray.length; i++){
     newSearch.textContent = searchArray[i];
     
     cityContEl.appendChild(newSearch);
-
+    
 };
 
 function formSubmitHandler(event){
@@ -39,7 +39,8 @@ function getCity(city){
     fetch(apiUrl).then (function(response){
         if(response.ok){
             response.json().then(function(data){
-                console.log(data)
+                console.log(data.query.text);
+                localStorage.setItem("newGuy", JSON.stringify(data.query.text));
                 var latValue = data.features[0].bbox[1];
                 console.log(latValue);
                 longValue = data.features[0].bbox[0];
@@ -78,10 +79,63 @@ function getWeather(lat, long){
 };
 
 function displayCurrent(currentObj){
+
+    currentWeatherEl.innerHTML = "";
+
+
+    var currDateEl = moment(currentObj.dt *1000).format("MM/DD/YYYY");
+    var currNameEl = JSON.parse(localStorage.getItem("newGuy"));
+    var currTempEl = currentObj.temp;
+    var currWindEl = currentObj.wind_speed;
+    var currHumEl = currentObj.humidity;
+    var currUviEl = currentObj.uvi;
+    var currIcon = "https://openweathermap.org/img/wn/" + currentObj.weather[0].icon + "@2x.png";
+
+
     
+    var currentCityCont = document.createElement('div');
+    currentCityCont.setAttribute("class", "flex-column col-7  m-3");
+
+    var currentName = document.createElement('h3');
+    currentName.textContent = currNameEl  + " " + currDateEl;
+
+    var currentTemp = document.createElement('p');
+    currentTemp.textContent = currTempEl + " °F";
+
+    var currentWind = document.createElement('p');
+    currentWind.textContent = "Wind Speed: " + currWindEl + "mph";
+
+
+    var currentHumid = document.createElement('p');
+    currentHumid.textContent = "Humidity: " + currHumEl + "%";
+
+
+    var currentUv = document.createElement('p');
+    currentUv.textContent = "UV Index: " + currUviEl;
+
+    var iconHouse = document.createElement("div");
+    iconHouse.setAttribute("class", "icon");
+
+    var currIconEl = document.createElement('img');
+    currIconEl.setAttribute("src", currIcon);
+
+    
+    currentCityCont.appendChild(currentName);
+    currentCityCont.appendChild(currentTemp);
+    currentCityCont.appendChild(currentWind);
+    currentCityCont.appendChild(currentHumid);
+    currentCityCont.appendChild(currentUv);
+    
+    iconHouse.appendChild(currIconEl);
+    
+    currentWeatherEl.appendChild(currentCityCont);
+    currentWeatherEl.appendChild(iconHouse);
 };
 
 function displayFive(fiveDayArray){
+    
+    fiveDayEl.innerHTML = "";
+    
     for(let i=0; i < 5; i++){
         var date = moment(fiveDayArray[i].dt *1000).format("MM/DD/YYYY");
         var icon = "http://openweathermap.org/img/wn/"+ fiveDayArray[i].weather[0].icon +"@2x.png";
@@ -100,13 +154,13 @@ function displayFive(fiveDayArray){
         iconEl.setAttribute("src",icon);
 
         var tempEl = document.createElement("p");
-        tempEl.textContent = tempHigh +" - "+ tempLow;
+        tempEl.textContent = tempHigh + "°F - " + tempLow + " °F";
 
         var windEl = document.createElement("p");
-        windEl.textContent = wind;
+        windEl.textContent = wind + "mph";
 
         var humEl = document.createElement("p");
-        humEl.textContent = humidity;
+        humEl.textContent = humidity + "%";
 
         fiveBlock.appendChild(dateEl);
         fiveBlock.appendChild(iconEl);
@@ -118,15 +172,10 @@ function displayFive(fiveDayArray){
 
 
     }
-//date, icon, temp, wind, humidity
+
 };
 
 
 searchForm.addEventListener("submit", formSubmitHandler);
 cityContEl.addEventListener("click", (e)=>
     getCity(e.target.textContent));
-
-// fetch from search bar; formSubmitHandler, getUserRepos
-// fetch from previous searches, limit 10; see buttonClickHandler
-// populate current values
-// populate 5 day forecast values

@@ -52,7 +52,6 @@
 .icon img{
     height: 250px;
     width: 250px;
-    border: 2px solid green;
 }
 .flex-row {
     display: flex;
